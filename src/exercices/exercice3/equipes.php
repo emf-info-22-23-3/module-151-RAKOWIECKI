@@ -9,11 +9,19 @@
       <table border= "1">
       <tr>
         <td>ID</td>
-        <td>Clube</td>
+        <td>Club</td>
       </tr>
       <?php
         require('ctrl.php');
-        // A compléter....
+
+        $equipe = getEquipes();
+
+        for($i = 0; $i < count($equipe); $i++) {
+
+          echo "<tr><td>" . $i . "</td>";
+          echo "<td>" . $equipe[$i] . "</td></tr>";
+          
+        };
       ?>
       </table>
     </div>
