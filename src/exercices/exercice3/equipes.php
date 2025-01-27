@@ -9,7 +9,7 @@
       <table border= "1">
       <tr>
         <td>ID</td>
-        <td>Club</td>
+        <td>Clube</td>
       </tr>
       <?php
         require('ctrl.php');
