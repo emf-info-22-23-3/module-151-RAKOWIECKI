@@ -5,7 +5,7 @@
 </header>
   <body>
     <div id="conteneur">
-      <h1>Les équipes de National Leagues</h1>    
+      <h1>Les équipes de National League</h1>    
       <table border= "1">
       <tr>
         <td>ID</td>
