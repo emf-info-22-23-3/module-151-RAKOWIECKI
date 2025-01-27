@@ -44,7 +44,7 @@ Le code suivant utilise cette classe :
 	include_once('Membre')
 	
 	$membre = new Membre('paul');
-	$Nom = $membre.getNom();
+	$nom = $membre.getNom();
 	$Numero = $membre.$numero;
 	
 	echo 'Un nouveau membre! Nom: ' $nom ', son âge: ' .$numero. '.';
