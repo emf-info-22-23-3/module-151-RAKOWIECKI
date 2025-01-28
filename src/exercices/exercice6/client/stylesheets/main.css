@@ -1,0 +1,19 @@
+body {
+    background-color: #A0A0A0;
+  }
+  
+  table , table th, table td {
+    border-collapse: collapse;
+    border: 1px solid black;
+  }
+  
+  #conteneur {
+    background-color: white;
+    width: 45em;
+    height: auto;
+    margin: auto; /* pour centrer le conteneur */
+    text-align: left;
+    border: 2px solid green;
+    padding: 1em 2em;
+    font-family: Verdana, Arial, serif;
+  }
