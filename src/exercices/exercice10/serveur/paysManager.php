@@ -6,7 +6,7 @@
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'GET')
 		{
-			$paysBD = new paysBDManager();
+			$paysBD = new PaysBDManager();
 			echo $paysBD->getInXML();
 		}
 	}
