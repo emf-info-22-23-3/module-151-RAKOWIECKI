@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = $connexion->selectSingleQuery($query, $params);
 
     if ($user) {
-        // Si l'utilisateur existe vérifier si le mot de passe est correct
+        // Si lutilisateur existe vérifier si le mot de passe est correct
         if (password_verify($password, $user['pwd'])) {
             // Mot de passe correct
             $_SESSION['logged'] = $user['nom']; 
