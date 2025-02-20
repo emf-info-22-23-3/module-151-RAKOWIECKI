@@ -1,0 +1,81 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .container {
+    width: 80%;
+    text-align: center;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  table, th, td {
+    border: 1px solid #ddd;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  td {
+    text-align: center;
+  }
+  
+  td img {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  input, select {
+    padding: 10px;
+    margin: 10px 0;
+    width: 80%;
+    max-width: 400px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  /* Style du bouton logout */
+  button.logout {
+    padding: 10px 20px;
+    background-color: red; /* Bouton rouge */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute; /* Positionnement absolu */
+    top: 10px; /* Décalage depuis le haut */
+    right: 10px; /* Décalage depuis la droite */
+  }
+  
+  button.logout:hover {
+    background-color: darkred; /* Changer la couleur du bouton au survol */
+  }
+  
+  /* Style spécifique pour les lignes vides entre chaque boss */
+  tr.empty-row {
+    background-color: #f2f2f2; /* Gris clair pour les lignes d'espacement */
+  }
+  
