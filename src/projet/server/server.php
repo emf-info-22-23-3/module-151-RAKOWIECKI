@@ -5,11 +5,11 @@ session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //Connexion
     if($_POST['action'] == "connect" && isset($_POST['nom']) && isset($_POST['pwd'])) {
+
     // Récupérer les valeurs envoyées par le formulaire
     $username = $_POST['nom'];
     $password = $_POST['pwd'];
     
-    // Connexion à la base de données via la classe Connexion
     $connexion = Connexion::getInstance();
 
     // Vérifier si l'utilisateur existe dans la base de données
@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo '<username>' . $user['nom'] . '</username>';
             echo '</response>';
         } else {
-            // Mot de passe incorrect
             echo '<result>false</result>';
         }
     } else {
@@ -36,9 +35,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 } 
 
+// Vérifier si l'utilisateur est connecté
+if ($_POST['action'] == "checkSession") {
+    if (isset($_SESSION['logged'])) {
+        echo '<response>';
+        echo '<result>true</result>';
+        echo '<username>' . $_SESSION['logged'] . '</username>';
+        echo '</response>';
+    } else {
+        echo '<response>';
+        echo '<result>false</result>';
+        echo '</response>';
+    }
+}
+
+
 //Deconnexion
 if($_POST['action'] == "disconnect") {
-    // effacer la variable de session et écrire <result>true</result>
+    // effacer la variable de session
     unset($_SESSION['logged']);
     session_destroy();
     echo '<result>true</result>';

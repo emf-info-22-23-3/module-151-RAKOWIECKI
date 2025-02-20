@@ -1,64 +1,57 @@
 <?php 
   /**
-  * Classe Pays
-  *
-  * Cette classe représente un pays.
-  *
-  */
+   * Classe Locations
+   */
   class Locations
   {
-    /**
-    * Variable représentant le nom du pays
-    * @access private
-    * @var string
-    */
+    // Déclaration des propriétés privées
     private $location;
-    /**
-    * Variable représentant la pk du pays
-    * @access private
-    * @var integer
-    */
     private $pk_location;
 
     /**
-    * Constructeur de la classe Pays
-    *
-    * @param int $pk_pays. PK du pays
-    * @param string nom. Nom du pays
-    * @param int $dossardCoureur. Numéro de dossard du coureur
-    */
+     * Constructeur de la classe Locations
+     *
+     * Le constructeur permet d'initialiser un objet Locations avec les informations nécessaires : PK et nom.
+     *
+     * @param int $pk_location Identifiant unique (PK) de la localisation.
+     * @param string $location Nom de la localisation.
+     */
     public function __construct($pk_location, $location)
     {
       $this->location = $location;
-      $this->pk_location = $pk_location;    
+      $this->pk_location = $pk_location;
     }
     
     /**
-    * Fonction qui retourne le nom du pays.
-    *
-    * @return nom du pays.
-    */
+     * Fonction qui retourne le nom de la localisation.
+     *
+     * @return string Nom de la localisation.
+     */
     public function getLocation()
     {
       return $this->location;
     }
     
     /**
-    * Fonction qui retourne la pk du pays.
-    *
-    * @return pk du pays.
-    */
+     * Fonction qui retourne l'identifiant unique (PK) de la localisation.
+     *
+     * @return int Identifiant unique de la localisation.
+     */
     public function getPkLocation()
     {
       return $this->pk_location;
     }
     
     /**
-    * Fonction qui retourne le contenu du bean au format XML
-    * @return le contenu du bean au format XML
-    */
+     * Fonction qui retourne le contenu de l'objet Locations sous forme de XML
+     *
+     * Cette fonction génère un XML contenant les informations de la localisation (PK et nom).
+     *
+     * @return string Contenu de l'objet Locations au format XML.
+     */
     public function toXML()
     {
+      // Création de la chaîne XML avec les informations de la localisation
       $result = '<locations>';
       $result = $result . '<pk_location>'.$this->getPkLocation().'</pk_location>';
       $result = $result . '<location>'.$this->getLocation().'</location>';

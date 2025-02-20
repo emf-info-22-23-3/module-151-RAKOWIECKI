@@ -7,6 +7,8 @@
 		if ($_SERVER['REQUEST_METHOD'] == 'GET')
 		{
 			$bossBD = new BossBDManager();
+			
+			// Récupération des paramètres 'nom' et 'location' envoyés dans l'URL
 			echo $bossBD->getInXML($_GET['nom'] ,$_GET['location']);
 		}
 	}

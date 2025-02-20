@@ -3,45 +3,54 @@
 	include_once('../beans/Locations.php');
         
 	/**
-	* Classe paysBDManager
-	*
-	* Cette classe permet la gestion des pays dans la base de données dans l'exercice de debbugage
-	*
+	* Classe LocationBDManager
 	*/
 	class LocationBDManager
 	{
 		/**
-		* Fonction permettant la lecture des pays.
-		* Cette fonction permet de retourner la liste des pays se trouvant dans la liste
+		* Fonction permettant la lecture des localisations.
+		* 
+		* Cette fonction retourne la liste des localisations dans la base de données.
 		*
-		* @return liste de Pays
+		* @return array Liste des localisations.
 		*/
 		public function readLocation()
 		{
 			$count = 0;
 			$liste = array();
 			$connection = Connexion::getInstance();
-            $query = $connection->selectQuery("SELECT * FROM t_location", array());
+            
+            // Requête SQL pour récupérer les données sur les localisations
+			$query = $connection->selectQuery("SELECT * FROM t_location", array());
+
+            // Boucle pour remplir le tableau avec les objets Locations
 			foreach($query as $data){
 				$location = new Locations($data['pk_location'], $data['location']);
 				$liste[$count++] = $location;
 			}	
-			return $liste;	
+			return $liste;
 		}
 		
 		/**
-		* Fonction permettant de retourner la liste des pays en XML.
+		* Fonction permettant de retourner la liste des localisations sous forme de XML.
 		*
-		* @return String. Liste des pays en XML
+		* Cette fonction génère un XML contenant toutes les informations des localisations.
+		*
+		* @return string Liste des localisations au format XML.
 		*/
 		public function getInXML()
 		{
+		// Récupère la liste des localisations
 			$listLocation = $this->readLocation();
+
 			$result = '<listeLocation>';
+
+            // Boucle pour ajouter chaque localisation au format XML
 			for($i=0;$i<sizeof($listLocation);$i++) 
 			{
 				$result = $result .$listLocation[$i]->toXML();
 			}
+
 			$result = $result . '</listeLocation>';
 			return $result;
 		}
