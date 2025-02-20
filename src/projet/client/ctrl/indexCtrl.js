@@ -47,11 +47,11 @@ function inscriptionSucces(data) {
  *
  * @param {Object} data - Les données de réponse du serveur (format XML).
  */
-function checkSession2(data) {
+function sessionOK(data) {
   if ($(data).find("result").text() === "true") {
     var usr = document.getElementById("usrr");
     var u = localStorage.getItem("user");
-    usr.innerText = "Salut " + u.slice(1, u.length - 1);
+    usr.innerText = "Salut " + u.slice(1, u.length - 1) + " !";
     lireLocation(chargerLocationSuccess, callBackError);
   } else {
     window.location.href = "index.html";
@@ -154,7 +154,7 @@ $(document).ready(function () {
   $.getScript("services/servicesHttp.js", function () {
     console.log("servicesHttp.js chargé !");
     if (window.location.pathname.endsWith("boss.html")) {
-      checkSession(checkSession2, callBackError);
+      checkSession(sessionOK, callBackError);
     }
   });
 
