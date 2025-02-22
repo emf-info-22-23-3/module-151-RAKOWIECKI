@@ -57,10 +57,14 @@ function sessionOK(data) {
     usr.innerText = "Salut " + u.slice(1, u.length - 1) + " !";
     if (u.slice(1, u.length - 1) === "Admin") {
       sessionAdmin = true;
-      lireLocation(chargerLocationSuccess, callBackError);
-    } else {
-      lireLocation(chargerLocationSuccess, callBackError);
     }
+    lireLocation(chargerLocationSuccess, callBackError);
+    lireDB(
+      document.getElementById("nomBoss").value,
+      "Limgrave",
+      lireSuccess,
+      callBackError
+    );
   } else {
     session = false;
     window.location.href = "index.html";
@@ -89,40 +93,66 @@ function lireSuccess(data) {
         console.log("sessionAdminLire");
         var row =
           "<tr>" +
-          "<td> <strong>NOM : </strong> <input type='text' id='bossNom_" + boss.getPk() + "' value='" + boss.getNom() + "' /></td>" +
-          "<td> <strong>HP : </strong> <input type='text' id='bossHp_" + boss.getPk() + "' value='" + boss.getHp() + "' /></td>" +
-          "<td> <strong>DEF : </strong> <input type='text' id='bossDef_" + boss.getPk() + "' value='" + boss.getDef() + "' /></td>" +
+          "<td> <strong>NOM : </strong> <input type='text' id='bossNom_" +
+          boss.getPk() +
+          "' value='" +
+          boss.getNom() +
+          "' /></td>" +
+          "<td> <strong>HP : </strong> <input type='text' id='bossHp_" +
+          boss.getPk() +
+          "' value='" +
+          boss.getHp() +
+          "' /></td>" +
+          "<td> <strong>DEF : </strong> <input type='text' id='bossDef_" +
+          boss.getPk() +
+          "' value='" +
+          boss.getDef() +
+          "' /></td>" +
           "</tr>";
 
         $("#tab").append(row);
 
         // A chaque modif de la textBox fait modifierNom
         $("#bossNom_" + boss.getPk()).on("input", function () {
-          if(sessionAdmin){
-          modifierNom(boss.getPk(), $(this).val(), modifierNomSuccess, callBackError);
-          }
+            modifierNom(
+              boss.getPk(),
+              $(this).val(),
+              modifierNomSuccess,
+              callBackError
+            );
         });
 
         // A chaque modif de la textBox fait modiferHP
         $("#bossHp_" + boss.getPk()).on("input", function () {
-          if(sessionAdmin){
-            modifierHP(boss.getPk(), $(this).val(), modifierHPSuccess, callBackError);
-            }
+            modifierHP(
+              boss.getPk(),
+              $(this).val(),
+              modifierHPSuccess,
+              callBackError
+            );
         });
 
         // A chaque modif de la textBox fait modifierDef
         $("#bossDef_" + boss.getPk()).on("input", function () {
-          if(sessionAdmin){
-            modifierDef(boss.getPk(), $(this).val(), modifierDefSuccess, callBackError);
-            }
+            modifierDef(
+              boss.getPk(),
+              $(this).val(),
+              modifierDefSuccess,
+              callBackError
+            );
         });
-
-      } else {
+      } else if (session) {
         var row =
-         "<tr>" +
-          "<td> <strong>NOM : </strong>" + boss.getNom() + "</td>" +
-          "<td> <strong>HP : </strong>" + boss.getHp() + "</td>" +
-          "<td> <strong>DEF : </strong>" + boss.getDef() + "</td>" +
+          "<tr>" +
+          "<td> <strong>NOM : </strong>" +
+          boss.getNom() +
+          "</td>" +
+          "<td> <strong>HP : </strong>" +
+          boss.getHp() +
+          "</td>" +
+          "<td> <strong>DEF : </strong>" +
+          boss.getDef() +
+          "</td>" +
           "</tr>";
         $("#tab").append(row);
       }
@@ -136,6 +166,7 @@ function lireSuccess(data) {
  * @param {Object} data - Les données de réponse du serveur (format XML).
  */
 function chargerLocationSuccess(data) {
+  if(session){
   var cmbLoc = document.getElementById("location");
   $(data)
     .find("locations")
@@ -148,15 +179,16 @@ function chargerLocationSuccess(data) {
         JSON.stringify(locations)
       );
     });
+  }
 }
 
-function modifierNomSuccess(){
-    console.log("NOM MODIF");
+function modifierNomSuccess() {
+  console.log("NOM MODIF");
 }
-function modifierHPSuccess(){
+function modifierHPSuccess() {
   console.log("HP MODIF");
 }
-function modifierDefSuccess(){
+function modifierDefSuccess() {
   console.log("DEF MODIF");
 }
 
@@ -233,8 +265,10 @@ $(document).ready(function () {
     console.log("BUTTON CONNECT!");
   });
   butDisconnect.click(function (event) {
+    if(session || sessionAdmin){
     disconnect(disconnectSuccess, callBackError);
     console.log("BUTTON DISCONNECT!");
+    }
   });
   butInscription.click(function (event) {
     inscription(
