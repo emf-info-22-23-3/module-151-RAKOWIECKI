@@ -113,3 +113,36 @@ function checkSession(successCallback, errorCallback) {
     error: errorCallback,
   });
 }
+
+function modifierNom(pkBoss, modif, successCallback, errorCallback) {
+  $.ajax({
+    type: "POST",
+    dataType: "xml",
+    url: "http://localhost:8080/projet/server/workers/bossManager.php",
+    data: "action=modifNom&pkBoss=" + pkBoss + "&modif=" + modif,
+    success: successCallback,
+    error: errorCallback,
+  });
+}
+
+function modifierHP(pkBoss, modif,successCallback, errorCallback) {
+  $.ajax({
+    type: "POST",
+    dataType: "xml",
+    url: "http://localhost:8080/projet/server/workers/bossManager.php",
+    data: "action=modifHP&pkBoss=" + pkBoss + "&modif=" + modif,
+    success: successCallback,
+    error: errorCallback,
+  });
+}
+
+function modifierDef(pkBoss, modif,successCallback, errorCallback) {
+  $.ajax({
+    type: "POST",
+    dataType: "xml",
+    url: "http://localhost:8080/projet/server/workers/bossManager.php",
+    data: "action=modifDef&pkBoss=" + pkBoss + "&modif=" + modif,
+    success: successCallback,
+    error: errorCallback,
+  });
+}

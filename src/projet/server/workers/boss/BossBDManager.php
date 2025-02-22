@@ -64,5 +64,57 @@
       $result = $result . '</listeBoss>';
       return $result;
     }
+
+    public function modifierNomBoss($pkBoss, $modif)
+    {
+      $connection = Connexion::getInstance();
+
+      // Requête SQL pour mettre à jour le nom du boss
+      $query = "UPDATE mydb.t_boss SET nom = :nom WHERE pk_boss = :pk_boss";
+      
+      // Paramètres pour la requête préparée
+      $params = array(':nom' => $modif, ':pk_boss' => $pkBoss);
+
+      // Exécuter la requête
+      $result = $connection->executeQuery($query, $params);
+      
+      // Retourner true si la mise à jour a réussi, false sinon
+      return $result;
+    }
+
+    public function modifierHpBoss($pkBoss, $modif)
+    {
+      $connection = Connexion::getInstance();
+
+      // Requête SQL pour mettre à jour le nom du boss
+      $query = "UPDATE mydb.t_boss SET hp = :hp WHERE pk_boss = :pk_boss";
+      
+      // Paramètres pour la requête préparée
+      $params = array(':hp' => $modif, ':pk_boss' => $pkBoss);
+
+      // Exécuter la requête
+      $result = $connection->executeQuery($query, $params);
+      
+      // Retourner true si la mise à jour a réussi, false sinon
+      return $result;
+    }
+
+    public function modifierDefBoss($pkBoss, $modif)
+    {
+      $connection = Connexion::getInstance();
+
+      // Requête SQL pour mettre à jour le nom du boss
+      $query = "UPDATE mydb.t_boss SET def = :def WHERE pk_boss = :pk_boss";
+      
+      // Paramètres pour la requête préparée
+      $params = array(':def' => $modif, ':pk_boss' => $pkBoss);
+
+      // Exécuter la requête
+      $result = $connection->executeQuery($query, $params);
+      
+      // Retourner true si la mise à jour a réussi, false sinon
+      return $result;
+    }
+
   }
 ?>

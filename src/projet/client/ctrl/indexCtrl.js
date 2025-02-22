@@ -1,3 +1,5 @@
+var session = false;
+var sessionAdmin = false;
 /**
  * Fonction appelée lors de la connexion réussie.
  * Si la connexion est réussie, le nom d'utilisateur est stocké dans le localStorage et l'utilisateur est redirigé vers la page "boss.html".
@@ -49,11 +51,18 @@ function inscriptionSucces(data) {
  */
 function sessionOK(data) {
   if ($(data).find("result").text() === "true") {
-    var usr = document.getElementById("usrr");
+    session = true;
     var u = localStorage.getItem("user");
+    var usr = document.getElementById("usrr");
     usr.innerText = "Salut " + u.slice(1, u.length - 1) + " !";
-    lireLocation(chargerLocationSuccess, callBackError);
+    if (u.slice(1, u.length - 1) === "Admin") {
+      sessionAdmin = true;
+      lireLocation(chargerLocationSuccess, callBackError);
+    } else {
+      lireLocation(chargerLocationSuccess, callBackError);
+    }
   } else {
+    session = false;
     window.location.href = "index.html";
   }
 }
@@ -65,6 +74,7 @@ function sessionOK(data) {
  * @param {Object} data - Les données de réponse du serveur (format XML).
  */
 function lireSuccess(data) {
+  $("#tab").empty();
   var txt = "";
   $(data)
     .find("bosses")
@@ -75,37 +85,48 @@ function lireSuccess(data) {
       boss.setHp($(this).find("hp").text());
       boss.setDef($(this).find("def").text());
 
-      // Créer une ligne pour le nom du boss
-      txt +=
-        "<tr>" +
-        "<td><strong>Nom</strong></td>" +
-        "<td>" +
-        boss.getNom() +
-        "</td>" +
-        "</tr>";
+      if (sessionAdmin) {
+        console.log("sessionAdminLire");
+        var row =
+          "<tr>" +
+          "<td> <strong>NOM : </strong> <input type='text' id='bossNom_" + boss.getPk() + "' value='" + boss.getNom() + "' /></td>" +
+          "<td> <strong>HP : </strong> <input type='text' id='bossHp_" + boss.getPk() + "' value='" + boss.getHp() + "' /></td>" +
+          "<td> <strong>DEF : </strong> <input type='text' id='bossDef_" + boss.getPk() + "' value='" + boss.getDef() + "' /></td>" +
+          "</tr>";
 
-      // Créer une ligne pour afficher HP
-      txt +=
-        "<tr>" +
-        "<td><strong>HP</strong></td>" +
-        "<td>" +
-        boss.getHp() +
-        "</td>" +
-        "</tr>";
+        $("#tab").append(row);
 
-      // Créer une ligne pour afficher DEF
-      txt +=
-        "<tr>" +
-        "<td><strong>DEF</strong></td>" +
-        "<td>" +
-        boss.getDef() +
-        "</td>" +
-        "</tr>";
+        // A chaque modif de la textBox fait modifierNom
+        $("#bossNom_" + boss.getPk()).on("input", function () {
+          if(sessionAdmin){
+          modifierNom(boss.getPk(), $(this).val(), modifierNomSuccess, callBackError);
+          }
+        });
 
-      // Ajouter une ligne vide pour l'espacement
-      txt += "<tr class='empty-row'><td colspan='2'>&nbsp;</td></tr>";
+        // A chaque modif de la textBox fait modiferHP
+        $("#bossHp_" + boss.getPk()).on("input", function () {
+          if(sessionAdmin){
+            modifierHP(boss.getPk(), $(this).val(), modifierHPSuccess, callBackError);
+            }
+        });
+
+        // A chaque modif de la textBox fait modifierDef
+        $("#bossDef_" + boss.getPk()).on("input", function () {
+          if(sessionAdmin){
+            modifierDef(boss.getPk(), $(this).val(), modifierDefSuccess, callBackError);
+            }
+        });
+
+      } else {
+        var row =
+         "<tr>" +
+          "<td> <strong>NOM : </strong>" + boss.getNom() + "</td>" +
+          "<td> <strong>HP : </strong>" + boss.getHp() + "</td>" +
+          "<td> <strong>DEF : </strong>" + boss.getDef() + "</td>" +
+          "</tr>";
+        $("#tab").append(row);
+      }
     });
-  document.getElementById("tab").innerHTML = txt;
 }
 
 /**
@@ -127,6 +148,16 @@ function chargerLocationSuccess(data) {
         JSON.stringify(locations)
       );
     });
+}
+
+function modifierNomSuccess(){
+    console.log("NOM MODIF");
+}
+function modifierHPSuccess(){
+  console.log("HP MODIF");
+}
+function modifierDefSuccess(){
+  console.log("DEF MODIF");
 }
 
 /**
@@ -153,6 +184,7 @@ $(document).ready(function () {
 
   $.getScript("services/servicesHttp.js", function () {
     console.log("servicesHttp.js chargé !");
+    //Si on ouvres la page boss.html on check si le login est OK
     if (window.location.pathname.endsWith("boss.html")) {
       checkSession(sessionOK, callBackError);
     }
@@ -166,25 +198,29 @@ $(document).ready(function () {
   });
 
   nomBoss.on("input", function () {
-    const locationString = document.getElementById("location").value;
-    const parsedLocation = JSON.parse(locationString);
-    lireDB(
-      document.getElementById("nomBoss").value,
-      parsedLocation.location,
-      lireSuccess,
-      callBackError
-    );
+    if (session) {
+      const locationString = document.getElementById("location").value;
+      const parsedLocation = JSON.parse(locationString);
+      lireDB(
+        document.getElementById("nomBoss").value,
+        parsedLocation.location,
+        lireSuccess,
+        callBackError
+      );
+    }
   });
 
   location.on("input", function () {
-    const locationString = document.getElementById("location").value;
-    const parsedLocation = JSON.parse(locationString);
-    lireDB(
-      document.getElementById("nomBoss").value,
-      parsedLocation.location,
-      lireSuccess,
-      callBackError
-    );
+    if (session) {
+      const locationString = document.getElementById("location").value;
+      const parsedLocation = JSON.parse(locationString);
+      lireDB(
+        document.getElementById("nomBoss").value,
+        parsedLocation.location,
+        lireSuccess,
+        callBackError
+      );
+    }
   });
 
   butConnect.click(function (event) {
