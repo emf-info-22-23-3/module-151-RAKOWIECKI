@@ -93,17 +93,17 @@ function lireSuccess(data) {
         console.log("sessionAdminLire");
         var row =
           "<tr>" +
-          "<td> <strong>NOM : </strong> <input type='text' id='bossNom_" +
+          "<td> <strong>NOM</strong><br></br> <input type='text' id='bossNom_" +
           boss.getPk() +
           "' value='" +
           boss.getNom() +
           "' /></td>" +
-          "<td> <strong>HP : </strong> <input type='text' id='bossHp_" +
+          "<td> <strong>HP</strong><br></br> <input type='text' id='bossHp_" +
           boss.getPk() +
           "' value='" +
           boss.getHp() +
           "' /></td>" +
-          "<td> <strong>DEF : </strong> <input type='text' id='bossDef_" +
+          "<td> <strong>DEF</strong><br></br> <input type='text' id='bossDef_" +
           boss.getPk() +
           "' value='" +
           boss.getDef() +
@@ -184,23 +184,23 @@ function chargerLocationSuccess(data) {
 
 function modifierNomSuccess(data) {
   if ($(data).find("result").text() == "true") {
-    alert("modif nom ok");
+    console.log("modif nom nok");
   } else {
-    alert("modif nom NOK");
+    console.log("modif nom nok");
   }
 }
 function modifierHPSuccess(data) {
   if ($(data).find("result").text() == "true") {
-    alert("modif HP ok");
+    console.log("modif HP ok");
   } else {
-    alert("modif HP NOK");
+    console.log("modif HP nok");
   }
 }
 function modifierDefSuccess(data) {
   if ($(data).find("result").text() == "true") {
-    alert("modif Def ok");
+    console.log("modif Def ok");
   } else {
-    alert("modif Def NOK");
+    console.log("modif Def nok");
   }
 }
 
