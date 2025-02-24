@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (password_verify($password, $user['pwd'])) {
             // Mot de passe correct
             $_SESSION['logged'] = $user['nom']; 
+            setcookie("username", $user['nom'], time() + 3600, "/");
             echo '<response>';
             echo '<result>true</result>';
             echo '<username>' . $user['nom'] . '</username>';

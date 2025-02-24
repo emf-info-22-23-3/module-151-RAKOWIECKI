@@ -1,5 +1,6 @@
 var session = false;
 var sessionAdmin = false;
+
 /**
  * Fonction appelée lors de la connexion réussie.
  * Si la connexion est réussie, le nom d'utilisateur est stocké dans le localStorage et l'utilisateur est redirigé vers la page "boss.html".
@@ -184,7 +185,7 @@ function chargerLocationSuccess(data) {
 
 function modifierNomSuccess(data) {
   if ($(data).find("result").text() == "true") {
-    console.log("modif nom nok");
+    console.log("modif nom ok");
   } else {
     console.log("modif nom nok");
   }
@@ -238,8 +239,8 @@ $().ready(function () {
   $.getScript("beans/locations.js", function () {
     console.log("locations.js chargé !");
   });
-  $.getScript("beans/boss/boss.js", function () {
-    console.log("locations.js chargé !");
+  $.getScript("beans/boss.js", function () {
+    console.log("boss.js chargé !");
   });
 
   nomBoss.on("input", function () {
