@@ -72,7 +72,7 @@ function lireDB(nom, location, successCallback, errorCallback) {
   $.ajax({
     type: "GET",
     dataType: "xml",
-    url: "http://localhost:8080/projet/server/workers/bossManager.php",
+    url: "http://localhost:8080/projet/server/bossManager.php",
     data: "action=lireDB&nom=" + nom + "&location=" + location,
     success: successCallback,
     error: errorCallback,
@@ -90,7 +90,7 @@ function lireLocation(successCallback, errorCallback) {
   $.ajax({
     type: "GET",
     dataType: "xml",
-    url: "http://localhost:8080/projet/server/workers/locationManager.php",
+    url: "http://localhost:8080/projet/server/locationManager.php",
     success: successCallback,
     error: errorCallback,
   });
@@ -118,7 +118,7 @@ function modifierNom(pkBoss, modif, successCallback, errorCallback) {
   $.ajax({
     type: "POST",
     dataType: "xml",
-    url: "http://localhost:8080/projet/server/workers/bossManager.php",
+    url: "http://localhost:8080/projet/server/bossManager.php",
     data: "action=modifNom&pkBoss=" + pkBoss + "&modif=" + modif,
     success: successCallback,
     error: errorCallback,
@@ -129,7 +129,7 @@ function modifierHP(pkBoss, modif, successCallback, errorCallback) {
   $.ajax({
     type: "POST",
     dataType: "xml",
-    url: "http://localhost:8080/projet/server/workers/bossManager.php",
+    url: "http://localhost:8080/projet/server/bossManager.php",
     data: "action=modifHP&pkBoss=" + pkBoss + "&modif=" + modif,
     success: successCallback,
     error: errorCallback,
@@ -140,7 +140,7 @@ function modifierHP(pkBoss, modif, successCallback, errorCallback) {
   $.ajax({
     type: "POST",
     dataType: "xml",
-    url: "http://localhost:8080/projet/server/workers/bossManager.php",
+    url: "http://localhost:8080/projet/server/bossManager.php",
     data: "action=modifDef&pkBoss=" + pkBoss + "&modif=" + modif,
     success: successCallback,
     error: errorCallback,

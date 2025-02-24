@@ -1,6 +1,6 @@
 <?php 
   include_once('Connexion.php');
-  include_once('../beans/Bosses.php');
+  include_once('../../beans/Bosses.php');
         
   /**
    * Classe BossBDManager
