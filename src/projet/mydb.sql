@@ -141,16 +141,3 @@ INSERT INTO `mydb`.`t_location` (`pk_location`, `location`) VALUES (9, 'Miquella
 INSERT INTO `mydb`.`t_location` (`pk_location`, `location`) VALUES (10, 'Crumbling Farum Azula');
 
 COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `mydb`.`t_boss`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `mydb`;
-INSERT INTO `mydb`.`t_boss` (`t_boss`, `nom`, `hp`, `def`, `fk_location`) VALUES (1, 'Grafted Scion', 2000, 105, 1);
-INSERT INTO `mydb`.`t_boss` (`t_boss`, `nom`, `hp`, `def`, `fk_location`) VALUES (2, 'Godrick The Grafted', 6080, 105, 1);
-INSERT INTO `mydb`.`t_boss` (`t_boss`, `nom`, `hp`, `def`, `fk_location`) VALUES (3, 'Red Wolf Of Radagon', 2204, 107, 4);
-
-COMMIT;
-
