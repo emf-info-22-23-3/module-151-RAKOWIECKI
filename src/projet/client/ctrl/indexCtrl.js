@@ -1,3 +1,4 @@
+//Variables pour le controle de la session
 var session = false;
 var sessionAdmin = false;
 
@@ -9,10 +10,9 @@ var sessionAdmin = false;
  * @param {Object} data - Les données de réponse du serveur (format XML).
  */
 function connectSuccess(data) {
-  if ($(data).find("result").text() == "true") {
+  if ($(data).find("result").text() === "true") {
     var username = $(data).find("username").text();
     localStorage.setItem("user", JSON.stringify(username));
-    console.log(username);
     alert("Login ok");
     window.location.href = "boss.html";
   } else {
@@ -36,7 +36,7 @@ function disconnectSuccess() {
  * @param {Object} data - Les données de réponse du serveur (format XML).
  */
 function inscriptionSucces(data) {
-  if ($(data).find("result").text() == "true") {
+  if ($(data).find("result").text() === "true") {
     alert("Inscription ok");
   } else {
     alert("Inscription NOK");
@@ -51,14 +51,35 @@ function inscriptionSucces(data) {
  * @param {Object} data - Les données de réponse du serveur (format XML).
  */
 function sessionOK(data) {
-  if ($(data).find("result").text() === "true") {
+  //Si le resultat apres le controle est trueAdmin alors sessionAdmin est true
+  if ($(data).find("result").text() == "trueAdmin") {
+    sessionAdmin = true;
     session = true;
+
+    //Recupération du nom d'utilisateur depuis localstorage
     var u = localStorage.getItem("user");
     var usr = document.getElementById("usrr");
     usr.innerText = "Salut " + u.slice(1, u.length - 1) + " !";
-    if (u.slice(1, u.length - 1) === "Admin") {
-      sessionAdmin = true;
-    }
+
+    //Affichage des localisation et des bosses de Limgrave
+    lireLocation(chargerLocationSuccess, callBackError);
+    lireDB(
+      document.getElementById("nomBoss").value,
+      "Limgrave",
+      lireSuccess,
+      callBackError
+    );
+
+    //Sinon si le controle retourne true alors c'est un utilisateur normal
+  } else if ($(data).find("result").text() == "true") {
+    session = true;
+
+    //Recupération du nom d'utilisateur depuis localstorage
+    var u = localStorage.getItem("user");
+    var usr = document.getElementById("usrr");
+    usr.innerText = "Salut " + u.slice(1, u.length - 1) + " !";
+
+    //Affichage des localisation et des bosses de Limgrave
     lireLocation(chargerLocationSuccess, callBackError);
     lireDB(
       document.getElementById("nomBoss").value,
@@ -73,7 +94,7 @@ function sessionOK(data) {
 }
 
 /**
- * Fonction qui traite les données des boss et les affiche dans un tableau.
+ * Fonction qui traite les données des boss et les affiche dans un tableau par rapport a l'utilisateur.
  * Parcourt la réponse XML et pour chaque boss, crée des lignes de tableau pour afficher le nom, les points de vie (HP) et la défense (DEF).
  *
  * @param {Object} data - Les données de réponse du serveur (format XML).
@@ -81,6 +102,8 @@ function sessionOK(data) {
 function lireSuccess(data) {
   $("#tab").empty();
   var txt = "";
+
+  //Créeation des objets boss avec les infos récuperée
   $(data)
     .find("bosses")
     .each(function () {
@@ -90,8 +113,8 @@ function lireSuccess(data) {
       boss.setHp($(this).find("hp").text());
       boss.setDef($(this).find("def").text());
 
+      //Si c'est une sessionAdmin on affiche la table avec des textBox avec chacun un id spécifique a la PK du boss en question
       if (sessionAdmin) {
-        console.log("sessionAdminLire");
         var row =
           "<tr>" +
           "<td> <strong>NOM</strong><br></br> <input type='text' id='bossNom_" +
@@ -115,33 +138,35 @@ function lireSuccess(data) {
 
         // A chaque modif de la textBox fait modifierNom
         $("#bossNom_" + boss.getPk()).on("input", function () {
-            modifierNom(
-              boss.getPk(),
-              $(this).val(),
-              modifierNomSuccess,
-              callBackError
-            );
+          modifierNom(
+            boss.getPk(),
+            $(this).val(),
+            modifierNomSuccess,
+            callBackError
+          );
         });
 
         // A chaque modif de la textBox fait modiferHP
         $("#bossHp_" + boss.getPk()).on("input", function () {
-            modifierHP(
-              boss.getPk(),
-              $(this).val(),
-              modifierHPSuccess,
-              callBackError
-            );
+          modifierHP(
+            boss.getPk(),
+            $(this).val(),
+            modifierHPSuccess,
+            callBackError
+          );
         });
 
         // A chaque modif de la textBox fait modifierDef
         $("#bossDef_" + boss.getPk()).on("input", function () {
-            modifierDef(
-              boss.getPk(),
-              $(this).val(),
-              modifierDefSuccess,
-              callBackError
-            );
+          modifierDef(
+            boss.getPk(),
+            $(this).val(),
+            modifierDefSuccess,
+            callBackError
+          );
         });
+
+        //Sinon si c'est une session normal on affiche dans des textes
       } else if (session) {
         var row =
           "<tr>" +
@@ -167,22 +192,32 @@ function lireSuccess(data) {
  * @param {Object} data - Les données de réponse du serveur (format XML).
  */
 function chargerLocationSuccess(data) {
-  if(session){
-  var cmbLoc = document.getElementById("location");
-  $(data)
-    .find("locations")
-    .each(function () {
-      var locations = new Locations();
-      locations.setLocation($(this).find("location").text());
-      locations.setPk($(this).find("pk_location").text());
-      cmbLoc.options[cmbLoc.options.length] = new Option(
-        locations,
-        JSON.stringify(locations)
-      );
-    });
+  //Si on as une session alors on peut charger
+  if (session) {
+    var cmbLoc = document.getElementById("location");
+
+    //Créeation des objets location avec les infos récuperée
+    $(data)
+      .find("locations")
+      .each(function () {
+        var locations = new Locations();
+        locations.setLocation($(this).find("location").text());
+        locations.setPk($(this).find("pk_location").text());
+
+        //Ajout des locations récuperée dans la cmbLoc
+        cmbLoc.options[cmbLoc.options.length] = new Option(
+          locations,
+          JSON.stringify(locations)
+        );
+      });
   }
 }
 
+/**
+ * Fonction qui informe si on a reussi a modifier le nom ou pas
+ *
+ * @param {Object} data - Les données de réponse du serveur (format XML).
+ */
 function modifierNomSuccess(data) {
   if ($(data).find("result").text() == "true") {
     console.log("modif nom ok");
@@ -190,6 +225,12 @@ function modifierNomSuccess(data) {
     console.log("modif nom nok");
   }
 }
+
+/**
+ * Fonction qui informe si on a reussi a modifier le HP
+ *
+ * @param {Object} data - Les données de réponse du serveur (format XML).
+ */
 function modifierHPSuccess(data) {
   if ($(data).find("result").text() == "true") {
     console.log("modif HP ok");
@@ -197,6 +238,12 @@ function modifierHPSuccess(data) {
     console.log("modif HP nok");
   }
 }
+
+/**
+ * Fonction qui informe si on a reussi a modifier la Def
+ *
+ * @param {Object} data - Les données de réponse du serveur (format XML).
+ */
 function modifierDefSuccess(data) {
   if ($(data).find("result").text() == "true") {
     console.log("modif Def ok");
@@ -215,7 +262,6 @@ function callBackError(request, status, error) {
   alert("erreur : " + error + ", request: " + request + ", status: " + status);
 }
 
-
 /**
  * Méthode "start" appelée après le chargement complet de la page
  * Initialise les événements de connexion, déconnexion, inscription, et la gestion des entrées des champs de formulaire.
@@ -230,6 +276,7 @@ $().ready(function () {
 
   $.getScript("services/servicesHttp.js", function () {
     console.log("servicesHttp.js chargé !");
+
     //Si on ouvres la page boss.html on check si le login est OK
     if (window.location.pathname.endsWith("boss.html")) {
       checkSession(sessionOK, callBackError);
@@ -243,10 +290,14 @@ $().ready(function () {
     console.log("boss.js chargé !");
   });
 
+  //A chaque evenement de la textBox ou on cherche le boss avec le nom
   nomBoss.on("input", function () {
     if (session) {
+      //Récuperation de la location choisite
       const locationString = document.getElementById("location").value;
       const parsedLocation = JSON.parse(locationString);
+
+      //lis dans la DB en fonction du nom et location donné
       lireDB(
         document.getElementById("nomBoss").value,
         parsedLocation.location,
@@ -256,10 +307,14 @@ $().ready(function () {
     }
   });
 
+  //A chaque evenement de la comBox ou on cherche le boss avec la location
   location.on("input", function () {
     if (session) {
+      //Récuperation de la location choisite
       const locationString = document.getElementById("location").value;
       const parsedLocation = JSON.parse(locationString);
+
+      //lis dans la DB en fonction du nom et location donné
       lireDB(
         document.getElementById("nomBoss").value,
         parsedLocation.location,
@@ -269,22 +324,28 @@ $().ready(function () {
     }
   });
 
+  //A chaque evenement du bouton connecter
   butConnect.click(function (event) {
+    //Essayer la connection par apport au nom et mot de passe donner
     connect(
       document.getElementById("nom").value,
       document.getElementById("pwd").value,
       connectSuccess,
       callBackError
     );
-    console.log("BUTTON CONNECT!");
   });
+
+  //A chaque evenement du bouton logOut
   butDisconnect.click(function (event) {
-    if(session || sessionAdmin){
-    disconnect(disconnectSuccess, callBackError);
-    console.log("BUTTON DISCONNECT!");
+    //Si il y a une session on peut déconnecter l'utilisateur
+    if (session) {
+      disconnect(disconnectSuccess, callBackError);
     }
   });
+
+  //A chaque evenement du bouton inscription
   butInscription.click(function (event) {
+    //Essayer d'inscrire par rapport au nom, email et mot de passe donnée
     inscription(
       document.getElementById("nom").value,
       document.getElementById("email").value,
@@ -292,6 +353,5 @@ $().ready(function () {
       inscriptionSucces,
       callBackError
     );
-    console.log("BUTTON INSCRIPTION!");
   });
 });

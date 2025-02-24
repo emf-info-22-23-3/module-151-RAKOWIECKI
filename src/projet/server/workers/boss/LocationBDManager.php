@@ -1,6 +1,6 @@
 <?php 
-	include_once('Connexion.php');
-	include_once('../beans/Locations.php');
+	include_once('././workers/Connexion.php');
+	include_once('././beans/Locations.php');
         
 	/**
 	* Classe LocationBDManager

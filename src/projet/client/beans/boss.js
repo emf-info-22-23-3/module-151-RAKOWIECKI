@@ -4,7 +4,6 @@
 var Bosses = function () {
   /**
    * Setter pour le nom du boss.
-   * Permet d'assigner un nom au boss.
    *
    * @param nom - Le nom du boss.
    */
@@ -14,7 +13,6 @@ var Bosses = function () {
 
   /**
    * Getter pour le nom du boss.
-   * Cette méthode permet de récupérer le nom du boss.
    *
    * @returns - Le nom du boss.
    */
@@ -24,7 +22,6 @@ var Bosses = function () {
 
   /**
    * Setter pour l'identifiant unique du boss (pk).
-   * Permet d'assigner un identifiant unique au boss.
    *
    * @param pk - L'identifiant unique du boss.
    */
@@ -34,7 +31,6 @@ var Bosses = function () {
 
   /**
    * Getter pour l'identifiant unique du boss (pk).
-   * Cette méthode permet de récupérer l'identifiant unique du boss.
    *
    * @returns - L'identifiant unique du boss.
    */
@@ -44,7 +40,6 @@ var Bosses = function () {
 
   /**
    * Setter pour les points de vie (HP) du boss.
-   * Permet d'assigner une valeur aux points de vie du boss.
    *
    * @param hp - Les points de vie du boss.
    */
@@ -54,7 +49,6 @@ var Bosses = function () {
 
   /**
    * Getter pour les points de vie (HP) du boss.
-   * Cette méthode permet de récupérer les points de vie du boss.
    *
    * @returns - Les points de vie du boss.
    */
@@ -64,7 +58,6 @@ var Bosses = function () {
 
   /**
    * Setter pour la défense (DEF) du boss.
-   * Permet d'assigner une valeur à la défense du boss.
    *
    * @param def - La défense du boss.
    */
@@ -74,7 +67,6 @@ var Bosses = function () {
 
   /**
    * Getter pour la défense (DEF) du boss.
-   * Cette méthode permet de récupérer la défense du boss.
    *
    * @returns - La défense du boss.
    */
@@ -84,7 +76,6 @@ var Bosses = function () {
 
   /**
    * Setter pour la clé étrangère de la localisation du boss.
-   * Permet d'assigner un identifiant de localisation au boss.
    *
    * @param fk_localisation - L'identifiant de la localisation du boss.
    */
@@ -94,7 +85,6 @@ var Bosses = function () {
 
   /**
    * Getter pour la fk de la localisation du boss.
-   * Cette méthode permet de récupérer l'identifiant de la localisation du boss.
    *
    * @returns - L'identifiant de la localisation du boss.
    */

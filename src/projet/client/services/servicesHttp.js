@@ -1,4 +1,6 @@
-var BASE_URL = "http://localhost:8080/projet/server/server.php";
+//Les URL differents
+const BASE_URL = "http://localhost:8080/projet/server/server.php";
+const BOSS_URL = "http://localhost:8080/projet/server/bossManager.php";
 
 /**
  * Fonction pour se connecter.
@@ -72,7 +74,7 @@ function lireDB(nom, location, successCallback, errorCallback) {
   $.ajax({
     type: "GET",
     dataType: "xml",
-    url: "http://localhost:8080/projet/server/bossManager.php",
+    url: BOSS_URL,
     data: "action=lireDB&nom=" + nom + "&location=" + location,
     success: successCallback,
     error: errorCallback,
@@ -114,35 +116,60 @@ function checkSession(successCallback, errorCallback) {
   });
 }
 
+/**
+ * Modifie le nom du boss dans la base de données.
+ * 
+ * @param {number} pkBoss - Identifiant unique du boss à modifier.
+ * @param {string} modif - Nouveau nom à attribuer au boss.
+ * @param {Function} successCallback - Fonction à appeler si la requête réussit.
+ * @param {Function} errorCallback - Fonction à appeler si la requête échoue.
+ */
 function modifierNom(pkBoss, modif, successCallback, errorCallback) {
   $.ajax({
     type: "POST",
     dataType: "xml",
-    url: "http://localhost:8080/projet/server/bossManager.php",
+    url: BOSS_URL,
     data: "action=modifNom&pkBoss=" + pkBoss + "&modif=" + modif,
     success: successCallback,
     error: errorCallback,
   });
 }
 
+/**
+ * Modifie les points de vie du boss dans la base de données.
+ * 
+ * @param {number} pkBoss - Identifiant unique du boss à modifier.
+ * @param {number} modif - Nouvelle valeur des points de vie du boss.
+ * @param {Function} successCallback - Fonction à appeler si la requête réussit.
+ * @param {Function} errorCallback - Fonction à appeler si la requête échoue.
+ */
 function modifierHP(pkBoss, modif, successCallback, errorCallback) {
   $.ajax({
     type: "POST",
     dataType: "xml",
-    url: "http://localhost:8080/projet/server/bossManager.php",
+    url: BOSS_URL,
     data: "action=modifHP&pkBoss=" + pkBoss + "&modif=" + modif,
     success: successCallback,
     error: errorCallback,
   });
 }
 
- function modifierDef(pkBoss, modif, successCallback, errorCallback) {
+/**
+ * Modifie la défense du boss dans la base de données.
+ * 
+ * @param {number} pkBoss - Identifiant unique du boss à modifier.
+ * @param {number} modif - Nouvelle valeur de la défense du boss.
+ * @param {Function} successCallback - Fonction à appeler si la requête réussit.
+ * @param {Function} errorCallback - Fonction à appeler si la requête échoue.
+ */
+function modifierDef(pkBoss, modif, successCallback, errorCallback) {
   $.ajax({
     type: "POST",
     dataType: "xml",
-    url: "http://localhost:8080/projet/server/bossManager.php",
+    url: BOSS_URL,
     data: "action=modifDef&pkBoss=" + pkBoss + "&modif=" + modif,
     success: successCallback,
     error: errorCallback,
   });
 }
+

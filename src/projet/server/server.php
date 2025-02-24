@@ -21,8 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Si l'utilisateur existe vérifier si le mot de passe est correct
         if (password_verify($password, $user['pwd'])) {
             // Mot de passe correct
-            $_SESSION['logged'] = $user['nom']; 
-            setcookie("username", $user['nom'], time() + 3600, "/");
+            $_SESSION['logged'] = ($user['nom']);
             echo '<response>';
             echo '<result>true</result>';
             echo '<username>' . $user['nom'] . '</username>';
@@ -38,7 +37,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 // Vérifier si l'utilisateur est connecté
 if ($_POST['action'] == "checkSession") {
-    if (isset($_SESSION['logged'])) {
+
+    //Controlle si Admin
+    if($_SESSION['logged'] == "Admin"){
+        echo '<response>';
+        echo '<result>trueAdmin</result>';
+        echo '<username>' . $_SESSION['logged'] . '</username>';
+        echo '</response>';
+    } else if (isset($_SESSION['logged'])){
         echo '<response>';
         echo '<result>true</result>';
         echo '<username>' . $_SESSION['logged'] . '</username>';

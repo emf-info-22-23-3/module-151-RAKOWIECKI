@@ -5,7 +5,6 @@
 var Locations = function () {
   /**
    * Setter pour la localisation.
-   * Permet d'assigner une valeur à la propriété `location`.
    *
    * @param location - Le nom de la localisation à attribuer à l'objet.
    */
@@ -15,7 +14,6 @@ var Locations = function () {
 
   /**
    * Setter pour l'identifiant de la localisation (pk).
-   * Permet d'assigner un identifiant à la localisation.
    *
    * @param pk - L'identifiant unique de la localisation.
    */

@@ -1,6 +1,6 @@
 <?php 
-  include_once('Connexion.php');
-  include_once('../../beans/Bosses.php');
+  include_once('././workers/Connexion.php');
+  include_once('././beans/Bosses.php');
         
   /**
    * Classe BossBDManager
@@ -24,7 +24,7 @@
       $liste = array();
       $connection = Connexion::getInstance();
       
-      // Requête SQL pour récupérer les bosses et leur localisation en fonction des critères
+      // Requête SQL pour récupérer les bosses et leur localisation en fonction des critères avec des parametres liées pour contrer les injections SQL
       $query = $connection->selectQuery("SELECT * FROM mydb.t_boss b JOIN mydb.t_location l ON b.fk_location = l.pk_location WHERE l.location LIKE :location AND b.nom LIKE :nom",
       array(':nom' => "%$nom%", ':location' => $location));
 
@@ -72,7 +72,7 @@
       // Requête SQL pour mettre à jour le nom du boss
       $query = "UPDATE mydb.t_boss SET nom = :nom WHERE pk_boss = :pk_boss";
       
-      // Paramètres pour la requête préparée
+      // Paramètres pour la requête préparée avec des parametres liées pour contrer les injections SQL
       $params = array(':nom' => $modif, ':pk_boss' => $pkBoss);
 
       // Exécuter la requête
@@ -89,7 +89,7 @@
       // Requête SQL pour mettre à jour le nom du boss
       $query = "UPDATE mydb.t_boss SET hp = :hp WHERE pk_boss = :pk_boss";
       
-      // Paramètres pour la requête préparée
+      // Paramètres pour la requête préparée avec des parametres liées pour contrer les injections SQL
       $params = array(':hp' => $modif, ':pk_boss' => $pkBoss);
 
       // Exécuter la requête
@@ -106,7 +106,7 @@
       // Requête SQL pour mettre à jour le nom du boss
       $query = "UPDATE mydb.t_boss SET def = :def WHERE pk_boss = :pk_boss";
       
-      // Paramètres pour la requête préparée
+      // Paramètres pour la requête préparée avec des parametres liées pour contrer les injections SQL
       $params = array(':def' => $modif, ':pk_boss' => $pkBoss);
 
       // Exécuter la requête
