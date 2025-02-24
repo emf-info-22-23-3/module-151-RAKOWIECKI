@@ -182,14 +182,26 @@ function chargerLocationSuccess(data) {
   }
 }
 
-function modifierNomSuccess() {
-  console.log("NOM MODIF");
+function modifierNomSuccess(data) {
+  if ($(data).find("result").text() == "true") {
+    alert("modif nom ok");
+  } else {
+    alert("modif nom NOK");
+  }
 }
-function modifierHPSuccess() {
-  console.log("HP MODIF");
+function modifierHPSuccess(data) {
+  if ($(data).find("result").text() == "true") {
+    alert("modif HP ok");
+  } else {
+    alert("modif HP NOK");
+  }
 }
-function modifierDefSuccess() {
-  console.log("DEF MODIF");
+function modifierDefSuccess(data) {
+  if ($(data).find("result").text() == "true") {
+    alert("modif Def ok");
+  } else {
+    alert("modif Def NOK");
+  }
 }
 
 /**
@@ -202,12 +214,13 @@ function callBackError(request, status, error) {
   alert("erreur : " + error + ", request: " + request + ", status: " + status);
 }
 
+
 /**
  * Méthode "start" appelée après le chargement complet de la page
  * Initialise les événements de connexion, déconnexion, inscription, et la gestion des entrées des champs de formulaire.
  * Charge les scripts nécessaires pour le bon fonctionnement de la page (servicesHttp.js, locations.js, et boss.js).
  */
-$(document).ready(function () {
+$().ready(function () {
   var butConnect = $("#login");
   var butDisconnect = $("#logout");
   var butInscription = $("#inscription");

@@ -125,7 +125,7 @@ function modifierNom(pkBoss, modif, successCallback, errorCallback) {
   });
 }
 
-function modifierHP(pkBoss, modif,successCallback, errorCallback) {
+function modifierHP(pkBoss, modif, successCallback, errorCallback) {
   $.ajax({
     type: "POST",
     dataType: "xml",
@@ -136,7 +136,7 @@ function modifierHP(pkBoss, modif,successCallback, errorCallback) {
   });
 }
 
-function modifierDef(pkBoss, modif,successCallback, errorCallback) {
+function modifierDef(pkBoss, modif, successCallback, errorCallback) {
   $.ajax({
     type: "POST",
     dataType: "xml",
